@@ -5,7 +5,7 @@ import tensorflow as tf
 from tensorflow import keras
 
 
-model = keras.models.load_model("model.h5")
+model = keras.models.load_model("images/one_hidden_layer/model.h5")
 
 data = keras.datasets.mnist
 
@@ -14,18 +14,17 @@ data = keras.datasets.mnist
 train_images = train_images/255.0
 test_images = test_images/255.0
 
-#print(train_images[0])
+test_index = 87
 
-#prediction = model.predict([train_images[0]])
-#print(prediction)
+for i in range(100):
+    single_test = test_images[i]
+    single_test = single_test.reshape(1, 28, 28)
 
-single_test = train_images[78]
-single_test = single_test.reshape(1, 28, 28)
-print(single_test.shape)
-#plt.imshow(train_images[78], cmap="gray")
-#plt.show()
-prediction = model.predict(single_test)
-print(np.argmax(prediction))
+    plt.imshow(test_images[i], cmap="gray")
+    plt.show()
 
-print(single_test)
+    prediction = model.predict(single_test)
+    print(np.argmax(prediction))
+
+
 
