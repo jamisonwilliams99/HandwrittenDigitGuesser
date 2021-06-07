@@ -22,6 +22,9 @@ class DrawingBoard:
         self.master = master
         self.grid = Grid()
         self.drawing_activated = False
+        self.prediction = ''
+        self.var = StringVar()
+        self.var.set("Prediction: " + self.prediction)
 
         self.top_frame = Frame(self.master)
         self.top_frame.pack()
@@ -29,6 +32,8 @@ class DrawingBoard:
         self.predict_button.grid(row=0, column=0)
         self.clear_button = Button(self.top_frame, text="Clear", command=self.clear)
         self.clear_button.grid(row=0, column=1)
+        self.prediction_label = Label(self.top_frame, text="Prediction: " + self.prediction)
+        self.prediction_label.grid(row=0, column=2, padx=(10,0))
         self.canvas = Canvas(self.master, width=CANVAS_WIDTH, height=CANVAS_HEIGHT, bg="white")
         self.canvas.pack()
 
@@ -70,6 +75,8 @@ class DrawingBoard:
         print(sorted_keys)
 
         print("That is the number ", np.argmax(prediction))
+        self.prediction = str(np.argmax(prediction))
+        self.prediction_label.config(text="Prediction: " + self.prediction)
 
     def convert_image(self):
         img = cv2.imread("images/digit.jpg", 0)
